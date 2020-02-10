@@ -70,7 +70,6 @@ def build_embed(_type=None, title=None, results=None, json=None, imdbid=None):
             language = json['language']
             url = 'https://www.imdb.com/title/{}/'.format(imdbid)
             embed = discord.Embed(title='Coming soon to a theatre near you!', url=url)
-            
             embed.set_footer(text='Plexbot.py', icon_url='https://zhf1943ap1t4f26r11i05c7l-wpengine.netdna-ssl.com/wp-content/uploads/2018/01/pmp-icon-1.png')
             embed.add_field(name='Title', value=title, inline=False)
             embed.add_field(name='Language', value=language)

@@ -75,6 +75,8 @@ def announce(ratingkey):
             embed.add_field(name='Release date', value=release, inline=True)
             embed.add_field(name='Rating', value=rating, inline=True)
             embed.add_field(name='Plot', value=plot)
+
+
             try:
                 if omdbdata['poster'] != 'N/A':
                     embed.set_image(url=omdbdata['poster'])
