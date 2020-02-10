@@ -1,0 +1,18 @@
+-------------------- Auto-Git Log --------------------
+		Mon Feb 10 2020 15:23:32 GMT+0100 (Central European Standard Time)
+------------------------------------------------------
+
+Modified files:
+* README.md
+* bot/discord_main.py
+* plugins/announce.py
+
+
+Created files:
+* .autogit/autogit.json
+
+
+Deleted files:
+
+
+Renamed files:
