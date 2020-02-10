@@ -51,7 +51,8 @@ def announce(ratingkey):
             embed.add_field(name='Rating', value=rating, inline=True)
             embed.add_field(name='Plot', value=plot, inline=False)
             try:
-                embed.set_image(url=omdbdata['poster'])
+                if omdbdata['poster'] != 'N/A':
+                    embed.set_image(url=omdbdata['poster'])
             except:
                 pass
             embed.set_footer(text='Plexbot.py', icon_url='https://zhf1943ap1t4f26r11i05c7l-wpengine.netdna-ssl.com/wp-content/uploads/2018/01/pmp-icon-1.png')
@@ -75,7 +76,8 @@ def announce(ratingkey):
             embed.add_field(name='Rating', value=rating, inline=True)
             embed.add_field(name='Plot', value=plot)
             try:
-                embed.set_image(url=omdbdata['poster'])
+                if omdbdata['poster'] != 'N/A':
+                    embed.set_image(url=omdbdata['poster'])
             except:
                 pass
             embed.set_footer(text='Plexbot.py', icon_url='https://zhf1943ap1t4f26r11i05c7l-wpengine.netdna-ssl.com/wp-content/uploads/2018/01/pmp-icon-1.png')
