@@ -32,18 +32,23 @@ def build_embed(_type=None, title=None, results=None, json=None, imdbid=None):
                     f = 'Series'
                 else:
                     f = 'Film'
+                    
                 if status == 'available':
                     status = 'Available for Request'
                     g = ':arrow_heading_down:'
+
                 if status == 'error':
                     status = 'Unavailable'
                     g = '🚫'
+
                 if status == 'exists':
                     status = 'On Plex'
                     g = ':clapper:'
+
                 if status == 'wishlist':
                     status = 'In wishlist'
                     g = '🕕'
+
                 embed.add_field(name='# {} ({}) > {}'.format(c, f, imdbid), value=name + ' ({})\nstatus:\n{} {}'.format(year, status, g))           
                 c += 1
         elif _type == 'request':
@@ -52,7 +57,11 @@ def build_embed(_type=None, title=None, results=None, json=None, imdbid=None):
             year = json['year']
             released = json['released']
             rating = json['ratings'][0]['value']
-            poster = json['poster']
+            try:
+                poster = json['poster']
+                embed.set_image(url=poster)
+            except:
+                pass
             rtype = json['type']
             plot = json['plot']
             runtime = json['runtime']
@@ -60,9 +69,7 @@ def build_embed(_type=None, title=None, results=None, json=None, imdbid=None):
             language = json['language']
             url = 'https://www.imdb.com/title/{}/'.format(imdbid)
             embed = discord.Embed(title='Coming soon to a theatre near you!', url=url)
-            if poster != 'N/A':
-                embed = discord.Embed(title='Coming soon in a theatre near you!', url=url)
-            embed.set_image(url=poster)
+            
             embed.set_footer(text='Plexbot.py', icon_url='https://zhf1943ap1t4f26r11i05c7l-wpengine.netdna-ssl.com/wp-content/uploads/2018/01/pmp-icon-1.png')
             embed.add_field(name='Title', value=title, inline=False)
             embed.add_field(name='Language', value=language)
