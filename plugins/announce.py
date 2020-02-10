@@ -50,8 +50,10 @@ def announce(ratingkey):
             embed.add_field(name='Release date', value=release, inline=True)
             embed.add_field(name='Rating', value=rating, inline=True)
             embed.add_field(name='Plot', value=plot, inline=False)
-            if omdbdata['poster'] != 'N/A':
+            try:
                 embed.set_image(url=omdbdata['poster'])
+            except:
+                pass
             embed.set_footer(text='Plexbot.py', icon_url='https://zhf1943ap1t4f26r11i05c7l-wpengine.netdna-ssl.com/wp-content/uploads/2018/01/pmp-icon-1.png')
 
     elif _type == 'Films' or _type == '4k Movies' or _type == 'Norsk':
@@ -72,8 +74,10 @@ def announce(ratingkey):
             embed.add_field(name='Release date', value=release, inline=True)
             embed.add_field(name='Rating', value=rating, inline=True)
             embed.add_field(name='Plot', value=plot)
-            if omdbdata['poster'] != 'N/A':
+            try:
                 embed.set_image(url=omdbdata['poster'])
+            except:
+                pass
             embed.set_footer(text='Plexbot.py', icon_url='https://zhf1943ap1t4f26r11i05c7l-wpengine.netdna-ssl.com/wp-content/uploads/2018/01/pmp-icon-1.png')
 
     else:
