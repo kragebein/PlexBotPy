@@ -59,7 +59,8 @@ def build_embed(_type=None, title=None, results=None, json=None, imdbid=None):
             rating = json['ratings'][0]['value']
             try:
                 poster = json['poster']
-                embed.set_image(url=poster)
+                if poster != 'N/A':
+                    embed.set_image(url=poster)
             except:
                 pass
             rtype = json['type']
