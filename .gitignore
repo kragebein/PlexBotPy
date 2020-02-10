@@ -1,0 +1,14 @@
+config.cfg
+*.pyc
+bot/*pyc
+.cookie
+.loop
+plexbotpy.log
+.vscode
+plugins/__pycache__
+bot/database.sql
+test.py
+*pycache*
+fil.txt
+cookie
+
