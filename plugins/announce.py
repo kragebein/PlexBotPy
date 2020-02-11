@@ -11,14 +11,14 @@
  '''
 import logging
 import bot.api
-import time, os, stat, logging, atexit,datetime, traceback, json, omdb, tvdbsimple as tvdb
+import time, os, stat, logging, atexit,datetime, traceback, json, omdb
+from pytvdbapi import api as tapi
 import discord
 from discord import Webhook, RequestsWebhookAdapter
 from bot.config import conf as conf
 pipe = 'bot/announcepipe'
-tvdb.KEYS.API_KEY = conf.ttdb_key
-
 def announce(ratingkey):
+    tvdb = tapi.TVDB(conf.ttdb_key, banners=True)
     omdb.set_default('apikey', conf.omdb_key)
     year = datetime.datetime.today().year
     '''function returns viable data from tautulli'''
@@ -27,14 +27,22 @@ def announce(ratingkey):
     _type = metadata['response']['data']['library_name']
 
     if _type == 'Series':
-            episode_name = metadata['response']['data']['title']
-            episode = metadata['response']['data']['media_index']
-            season = metadata['response']['data']['parent_media_index']
-            title = metadata['response']['data']['grandparent_title']
-            rating = metadata['response']['data']['rating'] + '/10'
-            release = metadata['response']['data']['originally_available_at']
             thetvdb = metadata['response']['data']['parent_guid'].split('//')[1].split('/')[0]
-            plot = metadata['response']['data']['summary']
+            episode = int(metadata['response']['data']['media_index'])
+            season = int(metadata['response']['data']['parent_media_index'])
+            #episode_name = metadata['response']['data']['title']
+            #title = metadata['response']['data']['grandparent_title']
+            #rating = metadata['response']['data']['rating'] + '/10'
+            #release = metadata['response']['data']['originally_available_at']
+            #plot = metadata['response']['data']['summary']
+            _metadata = tvdb.get_series(thetvdb, 'en')
+            title = _metadata.SeriesName
+            plot = _metadata[season][episode].Overview
+            rating = str(_metadata[season][episode].Rating) + '/10'
+            if rating == '0/10':
+                rating = 'N/A'
+            episode_name = _metadata[season][episode].EpisodeName
+            release = _metadata[season][episode].FirstAired
             from bot.api import ttdb
             imdbid = ttdb(thetvdb)
             omdbdata = omdb.imdbid('{}'.format(imdbid))
@@ -52,7 +60,7 @@ def announce(ratingkey):
             embed.add_field(name='Plot', value=plot, inline=False)
             try:
                 if omdbdata['poster'] != 'N/A':
-                    embed.set_image(url=omdbdata['poster'])
+                    embed.set_thumbnail(url=omdbdata['poster'])
             except:
                 pass
             embed.set_footer(text='Plexbot.py', icon_url='https://zhf1943ap1t4f26r11i05c7l-wpengine.netdna-ssl.com/wp-content/uploads/2018/01/pmp-icon-1.png')
@@ -69,17 +77,14 @@ def announce(ratingkey):
             if rating is '' or rating == '/10':
                 rating = '1.0/10*'
             url = 'https://www.imdb.com/title/{}/'.format(imdbid)
-
             embed = discord.Embed(title='New movie "{}" available'.format(title), url=url)
             embed.add_field(name='Original title', value=title)
             embed.add_field(name='Release date', value=release, inline=True)
             embed.add_field(name='Rating', value=rating, inline=True)
             embed.add_field(name='Plot', value=plot)
-
-
             try:
                 if omdbdata['poster'] != 'N/A':
-                    embed.set_image(url=omdbdata['poster'])
+                    embed.set_thumbnail(url=omdbdata['poster'])
             except:
                 pass
             embed.set_footer(text='Plexbot.py', icon_url='https://zhf1943ap1t4f26r11i05c7l-wpengine.netdna-ssl.com/wp-content/uploads/2018/01/pmp-icon-1.png')
