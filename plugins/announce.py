@@ -79,7 +79,7 @@ def announce(ratingkey):
             if rating is '' or rating == '/10':
                 rating = '1.0/10*'
             url = 'https://www.imdb.com/title/{}/'.format(imdbid)
-            embed = discord.Embed(title='New movie "{}" available'.format(title), url=url)
+            embed = discord.Embed(title='New movie "{}" available'.format(title), url=url, colour=discord.Colour(0xf9c38b))
             embed.add_field(name='Original title', value=title)
             embed.add_field(name='Release date', value=release, inline=True)
             embed.add_field(name='Rating', value=rating, inline=True)
