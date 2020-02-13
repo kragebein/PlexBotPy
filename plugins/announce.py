@@ -39,20 +39,22 @@ def announce(ratingkey):
             title = _metadata.SeriesName
             plot = _metadata[season][episode].Overview
             rating = str(_metadata[season][episode].Rating) + '/10'
-            if rating == '0/10':
-                rating = 'N/A'
             episode_name = _metadata[season][episode].EpisodeName
             release = _metadata[season][episode].FirstAired
             from bot.api import ttdb
             imdbid = ttdb(thetvdb)
             omdbdata = omdb.imdbid('{}'.format(imdbid))
             url = 'https://www.imdb.com/title/{}/'.format(imdbid)
+            if rating == '0/10':
+                rating = 'N/A'
             if release is '':
                 release = str(year) + '*'
             if rating is '' or rating == '/10' or rating == 'N/A':
                 rating = '1.0/10*'
             if plot == '':
                 plot = 'N/A'
+            if title == '' or title == 'N/A':
+                title = 'N/A'
             embed = discord.Embed(title='New episode from {}'.format(title), url=url, colour=discord.Colour(0xf9c38b))
             embed.add_field(name='Episode name', value=episode_name, inline=False)
             embed.add_field(name='Season', value=season, inline=True)
@@ -74,10 +76,16 @@ def announce(ratingkey):
             rating = metadata['response']['data']['rating'] + '/10'
             imdbid = metadata['response']['data']['guid'].split('//')[1].split('?')[0]
             omdbdata = omdb.imdbid('{}'.format(imdbid))
+            if rating == '0/10':
+                rating = 'N/A'
             if release is '':
                 release = str(year) + '*'
             if rating is '' or rating == '/10':
                 rating = '1.0/10*'
+            if plot == '':
+                plot = 'N/A'
+            if title == '' or title == 'N/A':
+                title = 'N/A'
             url = 'https://www.imdb.com/title/{}/'.format(imdbid)
             embed = discord.Embed(title='New movie "{}" available'.format(title), url=url, colour=discord.Colour(0xf9c38b))
             embed.add_field(name='Original title', value=title)
