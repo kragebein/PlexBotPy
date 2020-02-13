@@ -49,8 +49,10 @@ def announce(ratingkey):
             url = 'https://www.imdb.com/title/{}/'.format(imdbid)
             if release is '':
                 release = str(year) + '*'
-            if rating is '' or rating == '/10':
+            if rating is '' or rating == '/10' or rating == 'N/A':
                 rating = '1.0/10*'
+            if plot == '':
+                plot = 'N/A'
             embed = discord.Embed(title='New episode from {}'.format(title), url=url, colour=discord.Colour(0xf9c38b))
             embed.add_field(name='Episode name', value=episode_name, inline=False)
             embed.add_field(name='Season', value=season, inline=True)
